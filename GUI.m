@@ -1,0 +1,291 @@
+function varargout = GUI(varargin)
+
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @GUI_OpeningFcn, ...
+                   'gui_OutputFcn',  @GUI_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% --- Executes just before GUI is made visible.
+function GUI_OpeningFcn(hObject, eventdata, handles, varargin)
+handles.output = hObject;
+global X	% 在基本工作空間進行全域變數 x 的宣告  
+X = 0;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes GUI wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% --- Outputs from this function are returned to the command line.
+function varargout = GUI_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+
+function angle_Callback(hObject, eventdata, handles)
+% hObject    handle to angle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of angle as text
+%        str2double(get(hObject,'String')) returns contents of angle as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function angle_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to angle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function P_Callback(hObject, eventdata, handles)
+% hObject    handle to P (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of P as text
+%        str2double(get(hObject,'String')) returns contents of P as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function P_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to P (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function I_Callback(hObject, eventdata, handles)
+% hObject    handle to I (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of I as text
+%        str2double(get(hObject,'String')) returns contents of I as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function I_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to I (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function D_Callback(hObject, eventdata, handles)
+% hObject    handle to D (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of D as text
+%        str2double(get(hObject,'String')) returns contents of D as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function D_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to D (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in anglebutton.
+function anglebutton_Callback(hObject, eventdata, handles)
+angle = get(handles.angle,'string');
+angle = str2num(angle);
+angle = angle+150;
+if (angle > 200 || angle <100)
+    disp('too large')
+else
+    global t
+    disp(angle)
+    fwrite(t,[1 angle]);
+end
+
+
+
+% --- If Enable == 'on', executes on mouse press in 5 pixel border.
+% --- Otherwise, executes on mouse press in 5 pixel border or over anglebutton.
+function anglebutton_ButtonDownFcn(hObject, eventdata, handles)
+
+% hObject    handle to anglebutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Pbutton.
+function Pbutton_Callback(hObject, eventdata, handles)
+P = get(handles.P,'string');
+global t
+P = str2num(P);
+
+    P = P+200;
+    disp(P)
+    fwrite(t,[1 P]);
+
+
+
+
+% --- Executes on button press in Ibutton.
+function Ibutton_Callback(hObject, eventdata, handles)
+I = get(handles.I,'string');
+global t
+I = str2num(I);
+    I = I+300;
+    disp(I)
+    fwrite(t,[1 I]);
+
+
+
+% --- Executes on button press in Dbutton.
+function Dbutton_Callback(hObject, eventdata, handles)
+D = get(handles.D,'string');
+global t
+D = str2num(D);
+
+    D = D+400;
+    disp(D)
+    fwrite(t,[1 D]);
+
+
+
+% --- Executes on button press in connectbutton.
+function connectbutton_Callback(hObject, eventdata, handles)
+clear all;clc;delete(instrfind)
+global t
+t = tcpip('192.168.0.20', 23);
+fopen(t);
+pause(0.5);
+disp('GO')
+% set(handles.connectbutton,'BackgroundColor','green');
+global X
+X = 0;
+N = 100;
+x = 1:N;
+y = zeros(N,1);
+hp = plot(x,y,'o-');
+ylim([-40 40])
+disp('GOGO')
+while(X==0)
+    fwrite(t,[2 0]);
+    v0 = fgetl(t);   
+    y(1:(end-1)) = y(2:end);
+    y(end) = str2double(v0);
+    hp.YData = y;
+    pause(0.01);
+%     disp('ing')
+end
+% hObject    handle to connectbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in Disconnectionbutton.
+function Disconnectionbutton_Callback(hObject, eventdata, handles)
+global X
+global t
+X = 3;
+set(handles.connectbutton,'BackgroundColor','red');
+fclose(t)
+delete(t)
+clear t
+disp('End')
+% hObject    handle to Disconnectionbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- If Enable == 'on', executes on mouse press in 5 pixel border.
+% --- Otherwise, executes on mouse press in 5 pixel border or over connectbutton.
+function connectbutton_ButtonDownFcn(hObject, eventdata, handles)
+
+
+% hObject    handle to connectbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in stopbutton8.
+
+
+
+function edit6_Callback(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit6 as text
+%        str2double(get(hObject,'String')) returns contents of edit6 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+% function edit6_CreateFcn(hObject, eventdata, handles)
+% % hObject    handle to edit6 (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    empty - handles not created until after all CreateFcns called
+% 
+% % Hint: edit controls usually have a white background on Windows.
+% %       See ISPC and COMPUTER.
+% if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+%     set(hObject,'BackgroundColor','white');
+% end
+% 
+% 
+% % --- Executes on button press in pushbutton10.
+% function pushbutton10_Callback(hObject, eventdata, handles)
+% gap = get(handles.edit6,'string');
+% gap = str2num(gap);
+% gap = gap+500;
+% if (gap > 600 || gap <500)
+%     disp('too large')
+% else
+%     global t
+%     disp(gap)
+%     fwrite(t,[1 gap]);
+% end
